@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Calculator</title>
+    <style>
+        table {
+            color: #fff;
+            text-align: center;
+            border-collapse: collapse;
+            font: normal 3em Arial, Helvetica, sans-serif;
+            width: 100%;
+        }
+        tr {
+            height: 16.02vh;
+            background-color: #4e494d;
+        }
+        td {
+            width: 25vw;
+            border: 1px solid #4e494d;
+        }
+        #inputBox {
+            background-color: #4e494d;
+            text-align: right;
+            width: 100%;
+            font-size: 2em;
+            color: #fff;
+            border: 0px;
+        }
+        .digitButton {
+            background-color: #807e80;
+        }
+        .operatorButton {
+            background-color: #ff9e06;
+        }
+        .ACButton {
+            background-color: #656165;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td colspan="4">
+                <input type="text" id="inputBox" value="0" />
+            </td>
+        </tr>
+        <!-- Custom Function Buttons -->
+        <tr>
+            <td class="operatorButton" onclick="squareRoot()">√</td>
+            <td class="operatorButton" onclick="powerOf2()">x²</td>
+            <td class="operatorButton" onclick="powerOf3()">x³</td>
+            <td class="ACButton" onclick="btnACPressed()">AC</td>
+        </tr>
+        <tr>
+            <td class="digitButton" onclick="digitBtnPressed(7)">7</td>
+            <td class="digitButton" onclick="digitBtnPressed(8)">8</td>
+            <td class="digitButton" onclick="digitBtnPressed(9)">9</td>
+            <td class="operatorButton" onclick="operatorBtnPressed('x')">x</td>
+        </tr>
+        <tr>
+            <td class="digitButton" onclick="digitBtnPressed(4)">4</td>
+            <td class="digitButton" onclick="digitBtnPressed(5)">5</td>
+            <td class="digitButton" onclick="digitBtnPressed(6)">6</td>
+            <td class="operatorButton" onclick="operatorBtnPressed('-')">-</td>
+        </tr>
+        <tr>
+            <td class="digitButton" onclick="digitBtnPressed(1)">1</td>
+            <td class="digitButton" onclick="digitBtnPressed(2)">2</td>
+            <td class="digitButton" onclick="digitBtnPressed(3)">3</td>
+            <td class="operatorButton" onclick="operatorBtnPressed('+')">+</td>
+        </tr>
+        <tr>
+            <td class="digitButton" colspan="2" onclick="digitBtnPressed(0)">0</td>
+            <td class="digitButton" onclick="digitBtnPressed('.')">.</td>
+            <td class="operatorButton" onclick="operatorBtnPressed('/')">/</td>
+        </tr>
+        <tr>
+            <td class="operatorButton" colspan="4" onclick="equalsBtnPressed()">=</td>
+        </tr>
+    </table>
+
+    <script>
+        var newLine = true;
+        var value1;
+        var currentOperator;
+
+        function digitBtnPressed(button) {
+            let inputBox = document.getElementById("inputBox");
+            if (newLine) {
+                inputBox.value = button;
+                newLine = false;
+            } else {
+                inputBox.value += button;
+            }
+        }
+
+        function btnACPressed() {
+            document.getElementById("inputBox").value = "0";
+            newLine = true;
+            value1 = null;
+            currentOperator = null;
+        }
+
+        function operatorBtnPressed(operator) {
+            value1 = parseFloat(document.getElementById("inputBox").value);
+            currentOperator = operator;
+            newLine = true;
+        }
+
+        function equalsBtnPressed() {
+            let value2 = parseFloat(document.getElementById("inputBox").value);
+            let finalTotal;
+
+            switch (currentOperator) {
+                case "+":
+                    finalTotal = value1 + value2;
+                    break;
+                case "-":
+                    finalTotal = value1 - value2;
+                    break;
+                case "x":
+                    finalTotal = value1 * value2;
+                    break;
+                case "/":
+                    finalTotal = value1 / value2;
+                    break;
+                default:
+                    finalTotal = value2; // fallback
+            }
+
+            document.getElementById("inputBox").value = finalTotal;
+            newLine = true;
+        }
+
+        // Custom Functions
+        function squareRoot() {
+            let value = parseFloat(document.getElementById("inputBox").value);
+            document.getElementById("inputBox").value = Math.sqrt(value);
+            newLine = true;
+        }
+
+        function powerOf2() {
+            let value = parseFloat(document.getElementById("inputBox").value);
+            document.getElementById("inputBox").value = Math.pow(value, 2);
+            newLine = true;
+        }
+
+        function powerOf3() {
+            let value = parseFloat(document.getElementById("inputBox").value);
+            document.getElementById("inputBox").value = Math.pow(value, 3);
+            newLine = true;
+        }
+    </script>
+</body>
+</html>
